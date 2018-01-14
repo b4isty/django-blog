@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block head_title %}Create|{{ block.super }}{% endblock head_title %}
+{% block content %}
+<!--<form class="form-group" method="post" action="{% url 'content:create'%}">-->
+    <!--<button class="btn btn-primary" type="submit">Save</button>-->
+<!--</form>-->
+
+
+<form class="form-group" method="POST" action="{% url 'content:create'%}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+
+{% endblock %}
