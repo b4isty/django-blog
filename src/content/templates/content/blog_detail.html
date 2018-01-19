@@ -1,10 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>$Title$</title>
-    </head>
-    <body>
-        $END$
-    </body>
-</html>
+{% extends 'base.html' %}
+{% block head_title %}Blog Detail|{{ block.super }}{% endblock head_title %}
+{% block content %}
+
+    <h3 class="text-warning" style="text-align: center">User Name: {{ object.author }}</h3>
+    <h2 class="text-info" style="text-align: center"><b>{{ object.title }}</b></h2>
+
+    <h4 class="text-dark">{{ object.body }}</h4>
+    <p>
+        <small>Created</small>
+        {{ object.pub_date }}
+        <small>Updated</small>
+        {{ object.updated }}</p>
+
+    {% if object.author == request.user %}
+        <a class="col-sm-2" href="{% url 'content:update' blog.id %}"><input type="button" class="btn btn-primary"
+                                                                             value="Update"></a>
+        <div class="col-sm-2">
+        <form action="{% url 'content:delete' blog.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="blog_id" value="{{ blog.id }}">
+            <button type="submit" class="btn btn-danger" value="Delete">Delete<span
+                    class="glyphicon glyphicon-trash"></span></button>
+        </form>
+    {% endif %}
+</div>
+
+    {% if user.is_authenticated %}
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#comment"><span
+                class="glyphicon glyphicon-pencil"></span> Comment
+        </button>
+        <form action="{% url 'content:detail' blog.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="comment">
+            <input type="hidden" name="blog_id" value="{{ blog.id }}">
+            <div id="comment" class="collapse">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-9">
+                    <textarea class="form-control" rows="6" placeholder="Write your comment here"
+                              required name="write"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+
+        </form>
+
+    {% endif %}
+    <h3>Comments</h3>
+    <div class="card">
+        <div class="card-block">
+            {% for obj in object.comment_set.all %}
+                <b class="text-info">{{ obj.user|capfirst }}</b>>> {{ obj }}<br>
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+
+
+
+{% endblock %}
+

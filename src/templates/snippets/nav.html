@@ -1,10 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>$Title$</title>
-    </head>
-    <body>
-        $END$
-    </body>
-</html>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'home' %}">KnowledgeBook</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'home' %}">Home</a></li>
+            {% if request.user.is_authenticated %}
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">Topics<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'content:technology' %}">Technology</a></li>
+                        <li><a class="dropdown-item" href=" ">Music</a></li>
+                        <li><a class="dropdown-item" href="#">Dance</a></li>
+                        <li><a class="dropdown-item" href="#">Nature</a></li>
+                        <li><a class="dropdown-item" href="#">Feelings</a></li>
+                        <li><a class="dropdown-item" href="#">Motivation</a></li>
+                        <li><a class="dropdown-item" href="#">Politics</a></li>
+                    </ul>
+                </li>
+                <li><a class="glyphicon glyphicon-edit" href="{% url 'content:create' %}">Write</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">Profile<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                <li><a href="{% url 'profile-view' %}">Your Profile</a></li>
+                    <li><a href="{% url 'profile:edit' user.profile.id %}">Edit</a></li>
+                </ul>
+                </li>
+
+
+            {% endif %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        {% if request.user.is_authenticated %}
+            <li>
+                <form class="form-inline" method="get" action="">
+                    <input type="text" class="form-control" style="background-color: lavender" placeholder="Search" name="q">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </li>
+        {% endif %}
+
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+
+                {% else %}
+                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                {% endif %}
+        </ul>
+
+    </div>
+
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

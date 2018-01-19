@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block head_title %}Create|{{ block.super }}{% endblock head_title %}
+{% block content %}
+    <form method="post" action="{% url 'content:update' blog.id %}">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-success" value="Update" >
+    </form>
+{% endblock %}

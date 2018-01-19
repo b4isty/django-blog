@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>$Title$</title>
-    </head>
-    <body>
-        $END$
-    </body>
-</html>
+{% extends 'base.html' %}
+{% block head_title %}Blog List|{{ block.super }}{% endblock head_title %}
+{% block content %}
+    {% for obj in object_list %}
+        {% ifequal obj.topic 'technology' %}
+            <h3>
+                <li><a href="{% url 'content:detail' obj.id %}">{{ obj }}</a><br></li>
+            </h3>
+        {% endifequal %}
+
+    {% endfor %}
+{% endblock %}
